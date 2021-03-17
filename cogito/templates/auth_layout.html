@@ -1,51 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cogito</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
-    <style>
-        html, body {
-            height: 100%;
-            font-family: 'Playfair Display', serif;
-        }
+{% extends "base.html" %}
+{% block style %}
+<style>
+  html,
+  body {
+    height: 100%;
+    font-family: "Playfair Display", serif;
+  }
 
-        .auth-box {
-            border: 3px solid lightgrey;
-            border-radius: 10px;
-            padding-top: 25px;
-            padding-bottom: 25px;
-            width: 600px;
-            margin: auto;
-        }
+  .auth-box {
+    border: 3px solid lightgrey;
+    border-radius: 10px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    width: 600px;
+    margin: auto;
+  }
 
-        .login-form-container {
-            width: 300px;
-            margin: auto;
-        }
+  .login-form-container {
+    width: 300px;
+    margin: auto;
+  }
 
-        .registration-form-container {
-            width: 400px;
-            margin: auto;
-        }
+  .registration-form-container {
+    width: 400px;
+    margin: auto;
+  }
 
-        .outer-area {
-            margin-top: 100px;;
-        }
-    </style>
-</head>
-<body>
+  .outer-area {
+    margin-top: 100px;
+  }
+</style>
+{% endblock %} 
 
-    <div class="outer-area">
-        <div class="auth-box text-center">
-            {% block content %}
-            {% endblock %}
-        </div>
-    </div>
-   
-</body>
-</html>>
+{% block content %}
+<div class="outer-area">
+  <div class="auth-box text-center">
+    {% block auth %} 
+    {% endblock %}</div>
+</div>
+{% endblock %}
