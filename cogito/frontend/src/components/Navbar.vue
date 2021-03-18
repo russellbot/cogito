@@ -5,7 +5,7 @@
         >Cogito
       </router-link>
 
-      <div class="collapse navbar-collapse justify-content-end">
+      <div class="collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
             <router-link :to="{ name: 'home' }" class="btn btn-sm btn-success"
@@ -13,8 +13,8 @@
             </router-link>
           </li>
           <li class="nav-item mx-1">
-            <router-link :to="{ name: 'about' }" class="btn btn-sm btn-danger"
-              >About
+            <router-link :to="{ name: 'home' }" class="btn btn-sm btn-danger"
+              >Add Question
             </router-link>
           </li>
           <li class="nav-item">
