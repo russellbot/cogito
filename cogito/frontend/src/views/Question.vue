@@ -41,8 +41,20 @@
       <AnswerComponent
         v-for="(answer, index) in answers"
         :answer="answer"
+        :requestUser="requestUser"
         :key="index"
+        @delete-answer="deleteAnswer"
       />
+      <div class="my-4">
+        <p v-show="loadingAnswers">...loading...</p>
+        <button
+          v-show="next"
+          @click="getQuestionAnswers"
+          class="btn btn-sm btn-outline-success"
+        >
+          Load More
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -69,13 +81,20 @@ export default {
       error: null,
       userHasAnswered: false,
       showForm: false,
+      next: null,
+      loadingAnswers: false,
+      requestUser: null,
     };
   },
   methods: {
     setPageTitle(title) {
       document.title = title;
     },
+    setRequestUser() {
+      this.requestUser = window.localStorage.getItem("username");
+    },
     getQuestionData() {
+      // get the details of a question from REST API and set page title
       let endpoint = `/api/questions/${this.slug}/`;
       apiService(endpoint).then((data) => {
         this.question = data;
@@ -84,9 +103,20 @@ export default {
       });
     },
     getQuestionAnswers() {
+      // get a page of answers for a question from the REST API
       let endpoint = `/api/questions/${this.slug}/answers/`;
+      if (this.next) {
+        endpoint = this.next;
+      }
+      this.loadingAnswers = true;
       apiService(endpoint).then((data) => {
-        this.answers = data.results;
+        this.answers.push(...data.results);
+        this.loadingAnswers = false;
+        if (data.next) {
+          this.next = data.next;
+        } else {
+          this.next = null;
+        }
       });
     },
     onSubmit() {
@@ -107,10 +137,21 @@ export default {
         this.error = "You can't send an empty answer.";
       }
     },
+    async deleteAnswer(answer) {
+      let endpoint = `/api/answers/${answer.id}/`;
+      try {
+        await apiService(endpoint, "DELETE");
+        this.$delete(this.answers, this.answers.indexOf(answer));
+        this.userHasAnswered = false;
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
   created() {
     this.getQuestionData();
     this.getQuestionAnswers();
+    this.setRequestUser();
   },
 };
 </script>
