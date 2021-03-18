@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { apiService } from "../common/api.service";
+import { apiService } from "../common/api.service.js";
 export default {
   name: "home",
   data() {
