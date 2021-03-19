@@ -36,7 +36,7 @@ const routes = [
     props: true
   },
   {
-    path: '*',
+    path: "*",
     name: "page-not-found",
     component: NotFound
   }

@@ -19,7 +19,7 @@ export default {
       const data = await apiService("/api/user/");
       const requestUser = data["username"];
       window.localStorage.setItem("username", requestUser);
-      console.log(data, requestUser)
+      // console.log(data, requestUser)
     }
   },
   created() {

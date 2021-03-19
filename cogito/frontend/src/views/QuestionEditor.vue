@@ -43,8 +43,8 @@ export default {
         let method = "POST";
         // if this is an edit, change method and endpoint
         if (this.slug !== undefined) {
-          endpoint += `${ this.slug }/`;
-          method = "PUT"
+          endpoint += `${this.slug}/`;
+          method = "PUT";
         }
         apiService(endpoint, method, { content: this.question_body }).then(
           (question_data) => {
