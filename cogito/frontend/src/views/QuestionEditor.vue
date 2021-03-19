@@ -20,6 +20,12 @@
 import { apiService } from "@/common/api.service.js";
 export default {
   name: "QuestionEditor",
+  props: {
+    slug: {
+      type: String,
+      required: false,
+    },
+  },
   data() {
     return {
       question_body: null,
@@ -35,16 +41,31 @@ export default {
       } else {
         let endpoint = "/api/questions/";
         let method = "POST";
-        apiService(endpoint, method, { content: this.question_body })
-        .then(question_data => {
+        // if this is an edit, change method and endpoint
+        if (this.slug !== undefined) {
+          endpoint += `${ this.slug }/`;
+          method = "PUT"
+        }
+        apiService(endpoint, method, { content: this.question_body }).then(
+          (question_data) => {
             this.$router.push({
               name: "question",
-              params: { slug: question_data.slug }
-            })
+              params: { slug: question_data.slug },
+            });
           }
-        )
+        );
       }
     },
+  },
+  async beforeRouteEnter(to, from, next) {
+    // if answer exists, get the answer's data from the REST API and pass as props
+    if (to.params.slug !== undefined) {
+      let endpoint = `/api/questions/${to.params.slug}/`;
+      let data = await apiService(endpoint);
+      return next((vm) => (vm.question_body = data.content));
+    } else {
+      return next();
+    }
   },
   created() {
     document.title = "Editor - Cogito";

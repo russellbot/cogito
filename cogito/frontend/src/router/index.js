@@ -21,9 +21,11 @@ const routes = [
     props: true
   },
   {
-    path: "/ask",
+    // the ? in the path makes the slug param optional
+    path: "/ask/:slug?",
     name: "question-editor",
     component: QuestionEditor,
+    props: true
   },
   {
     // props: true ensures that the slug param gets passed as prop to component

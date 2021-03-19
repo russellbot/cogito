@@ -35,6 +35,7 @@ export default {
   },
   computed: {
     isAnswerAuthor() {
+      // return true if the logged in user is the author of the answer
       return this.answer.author === this.requestUser;
     },
   },
